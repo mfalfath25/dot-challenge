@@ -41,7 +41,7 @@ export const useAppStore = create<AppStore>()(
           set((state) => ({ ...state, isSignedIn: true }))
         },
         logout: () => {
-          set((state) => ({ ...state, isSignedIn: false }))
+          set((state) => ({ ...state, isSignedIn: false, username: "" }))
         },
         setUser: (data) => {
           set((state) => ({
