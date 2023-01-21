@@ -47,6 +47,16 @@ export const Quiz = () => {
     }, 1000)
   }
 
+  const handleChange = (e: any) => {
+    form.values.answers[activePage - 1] = (e.target as HTMLInputElement).value
+    setAnswers(form.values.answers)
+    setTimeout(() => {
+      if (activePage < 5) {
+        setPage(activePage + 1)
+      }
+    }, 100)
+  }
+
   useEffect(() => {
     if (timeLeft === 0) {
       handleSubmit()
@@ -80,9 +90,14 @@ export const Quiz = () => {
               <Box w={400}>
                 <Flex align="center" justify="space-between" direction="row">
                   <Text fz={"lg"} fw={700}>
-                    Question {activePage}
+                    Q{activePage}
                   </Text>
                   <Timer />
+                  <Text fz={"lg"} fw={700}>
+                    {answers.filter((answer) => answer !== "").length +
+                      "/" +
+                      form.values.answers.length}
+                  </Text>
                 </Flex>
               </Box>
             </Center>
@@ -107,10 +122,7 @@ export const Quiz = () => {
                                     checked={answers[indexQuestion] === answer}
                                     value={answer}
                                     onChange={(e) => {
-                                      form.values.answers[indexQuestion] = (
-                                        e.target as HTMLInputElement
-                                      ).value
-                                      setAnswers(form.values.answers)
+                                      handleChange(e)
                                     }}
                                   />
                                   {" " + decodeHtmlCharCodes(answer)}

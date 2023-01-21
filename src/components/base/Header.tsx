@@ -1,25 +1,35 @@
-import { Center, Group, ActionIcon, Title } from "@mantine/core"
+import { Center, Group, ActionIcon, Title, Flex } from "@mantine/core"
 import { useAppStore } from "../../stores/useAppStore"
-import { IconLogout } from "@tabler/icons"
-import { Link } from "react-router-dom"
+import { IconHome2, IconLogout } from "@tabler/icons"
+import { Link, useLocation } from "react-router-dom"
 
 export const Header = () => {
-  const { isSignedIn, logout } = useAppStore()
+  const location = useLocation()
+  const { isSignedIn, logout, clearCurrentQuiz } = useAppStore()
 
   return (
     <>
       {isSignedIn ? (
         <>
           <Group position="apart">
-            <Link to="/home" style={{ textDecoration: "none" }}>
-              <Title order={2} className="header-title">
-                TRIVIA
-              </Title>
-            </Link>
+            <Title order={2} className="header-title">
+              TRIVIA
+            </Title>
 
-            <ActionIcon onClick={logout} variant="filled" color="red">
-              <IconLogout size={18} />
-            </ActionIcon>
+            <Flex direction="row" gap="md">
+              <Link to="/home" style={{ textDecoration: "none" }}>
+                <ActionIcon
+                  onClick={location.pathname === "/result" ? clearCurrentQuiz : null}
+                  variant="filled"
+                  color="blue"
+                >
+                  <IconHome2 size={18} />
+                </ActionIcon>
+              </Link>
+              <ActionIcon onClick={logout} variant="filled" color="red">
+                <IconLogout size={18} />
+              </ActionIcon>
+            </Flex>
           </Group>
         </>
       ) : (

@@ -1,4 +1,4 @@
-import { Text } from "@mantine/core"
+import { Badge } from "@mantine/core"
 import moment from "moment"
 
 import { useEffect } from "preact/hooks"
@@ -23,8 +23,10 @@ export const Timer = () => {
   }, [])
 
   return (
-    <div>
-      <Text>{moment.utc(timeLeft).format("mm[m]:ss[s]")}</Text>
-    </div>
+    <>
+      <Badge color="red" size="xl" radius="md" variant="dot" style={{ textTransform: "none" }}>
+        {moment.utc(timeLeft).format("mm[m]:ss[s]")}
+      </Badge>
+    </>
   )
 }
